@@ -15,15 +15,25 @@ be:
 By considering the terms in the Fibonacci sequence whose values do not
 exceed four million, find the sum of the even-valued terms.
 
-Attempt One (success)
+Attempt Two: skip odds
+
+given that
+  ODD+ODD=EVEN
+  ODD+EVEN=ODD
+  EVEN+EVEN=EVEN
+
+the series is from 2 odd numbers x and y:
+[(x, ODD), (y, ODD), (x+y, EVEN), (x+2y, ODD), (2x+3y, ODD), (3x+5y, EVEN)] ...
+
+Compute each successive pair of odd values, and then sum their sum
 """
-a = 1
-b = 2
-sum = 2
-lim = 4000000
-while(a+b <= lim):
-  c = a+b
-  a, b = b, c
-  if c%2==0:
-    sum += c
-print sum
+LIM = 4000000
+
+def seq_sol():
+  x = 1
+  y = 1
+  sum = 0
+  while(x+y <= LIM):
+    sum += x+y
+    x, y = x + 2*y, 2*x + 3*y
+  return sum
